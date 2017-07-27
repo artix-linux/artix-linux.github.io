@@ -9,7 +9,7 @@ name: Artix Linux
 description: Artix Linux is a fork of Archlinux to use different init systems
 
 # URL of your avatar or profile pic (you could use your GitHub profile pic)
-avatar: https://github.com/artix-linux/artix-linux.github.io/blob/master/images/logo.png
+avatar: https://raw.githubusercontent.com/artix-linux/artix-linux.github.io/master/images/logo.png
 
 #
 # Flags below are optional
