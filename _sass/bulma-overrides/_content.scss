@@ -1,0 +1,55 @@
+// Bulma Component - Content
+
+.content {
+    h1, h2, h3, h4, h5 {
+        color: $color-cyan;
+    }
+
+    // Perfect third-scale
+    p {
+        margin-bottom: 1.3em;
+    }
+
+    h1, h2, h3, h4 {
+        margin: 1.414em 0 0.5em;
+        font-weight: inherit;
+        line-height: 1.2;
+    }
+
+    h1 {
+        margin-top: 0;
+        font-size: 2.074em;
+    }
+
+    h2 {
+        font-size: 1.728em;
+    }
+
+    h3 {
+        font-size: 1.44em;
+    }
+
+    h4 {
+        font-size: 1.2em;
+    }
+
+    small, .font_small {
+        font-size: 0.833em;
+    }
+
+    em {
+        font-weight: 600;
+    }
+
+    blockquote {
+        background-color: $color-background * 1.20;
+        border-width: 10px;
+
+        &.is-warning {
+            border-color: $color-red;
+            border-bottom: 1px solid $color-red;
+            border-right: 1px solid $color-red;
+            border-top: 1px solid $color-red;
+        }
+    }
+}

@@ -1,13 +1,33 @@
-
 //
 // VARIABLES
 //
 
-// Colors
-$blue: #4183C4;
+// colors
+$blue: #82aaff;
+
+// Custom palette from the material-theme by ChrisRM
+// https://github.com/ChrisRM/material-theme-jetbrains
+$color-background: #212121;
+$color-foreground: #b0bec5;
+$color-selection: #424242;
+$color-primary: #616161;
+$color-alternative: #546e7a;
+$color-inactive: #474747;
+
+$color-red: #ff5370;
+$color-pink: #f07178;
+$color-orange: #f78c6c;
+$color-yellow: #ffcb6b;
+$color-green: #c3e88d;
+$color-pale-blue: #b2ccd6;
+$color-cyan: #89ddff;
+$color-blue: #82aaff;
+$color-purple: #c792ea;
+$color-violet: #bb80b3;
+$color-brown: #ab7967;
 
 // Grays
-$black: #000;
+$black: $color-background;
 $darkerGray: #222;
 $darkGray: #333;
 $gray: #666;
@@ -19,9 +39,22 @@ $helvetica: Helvetica, Arial, sans-serif;
 $helveticaNeue: "Helvetica Neue", Helvetica, Arial, sans-serif;
 $georgia: Georgia, serif;
 
+//
+// Screen breakpoints
+//
+$breakpoints: (
+        xs: 0,
+        sm: 550px,
+        md: 780px,
+        lg: 990px,
+        xl: 1200px,
+) !default;
+
+$scale-spacing: 0 0.25rem 0.5rem 1rem 2rem 4rem !default;
+
 // Mobile breakpoints
 @mixin mobile {
-  @media screen and (max-width: 640px) {
-    @content;
-  }
+    @media screen and (max-width: 640px) {
+        @content;
+    }
 }

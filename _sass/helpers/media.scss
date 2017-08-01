@@ -1,0 +1,37 @@
+//
+// Basic media query mixins
+//
+
+@mixin media-until($breakpoints-map, $breakpoint) {
+    @media (max-width: map-get($breakpoints-map, $breakpoint)) {
+        @content;
+    }
+}
+
+/*
+
+@mixin media-between($breakpoints-map, $min, $max) {
+  @media ((min-width: map-get($breakpoints-map, $min)) and (max-width: map-get($breakpoints-map, $max))) {
+    @content;
+  }
+}
+*/
+
+@mixin media-from($breakpoints-map, $from) {
+    @media (min-width: map-get($breakpoints-map, $from)) {
+        @content;
+    }
+}
+
+@mixin create-breakpoint-styles($idx: 0) {
+    @each $breakpoint, $size in $kiki-breakpoints {
+        // Use the media-from here, so each column is responsive
+        @include media-from($kiki-breakpoints, $breakpoint) {
+            @at-root {
+                #{&}\@#{$breakpoint} {
+                    @content;
+                }
+            }
+        }
+    }
+}

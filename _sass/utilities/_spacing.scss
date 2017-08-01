@@ -1,0 +1,66 @@
+//
+// Margin classes
+//
+$margin-definition: (
+        t: (top),
+        b: (bottom),
+        l: (left),
+        r: (right),
+        x: (left, right),
+        y: (top, bottom),
+        a: (top, bottom, right, left)
+);
+
+@mixin margins($suffix: '') {
+    @for $idx from 0 to length($scale-spacing) {
+        @each $definition, $regions in $margin-definition {
+            .u-margin--#{$definition}#{$idx}#{$suffix} {
+                @each $coordinate in $regions {
+                    margin-#{$coordinate}: nth($scale-spacing, $idx+1);
+                }
+            }
+        }
+    }
+}
+
+@include margins();
+
+@each $breakpoint, $size in $breakpoints {
+    @include media-from($breakpoints, $breakpoint) {
+        @include margins('\\@' + $breakpoint);
+    }
+}
+
+
+//
+// Padding classes
+//
+$padding-definition: (
+        t: (top),
+        b: (bottom),
+        l: (left),
+        r: (right),
+        x: (left, right),
+        y: (top, bottom),
+        a: (top, bottom, right, left)
+);
+
+@mixin paddings($suffix: '') {
+    @for $idx from 0 to length($scale-spacing) {
+        @each $definition, $regions in $padding-definition {
+            .u-padding--#{$definition}#{$idx}#{$suffix} {
+                @each $coordinate in $regions {
+                    padding-#{$coordinate}: nth($scale-spacing, $idx+1);
+                }
+            }
+        }
+    }
+}
+
+@include paddings();
+
+@each $breakpoint, $size in $breakpoints {
+    @include media-from($breakpoints, $breakpoint) {
+        @include paddings('\\@' + $breakpoint);
+    }
+}

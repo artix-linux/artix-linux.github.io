@@ -1,0 +1,43 @@
+---
+layout: default
+---
+
+<div class="section  u-padding--t1">
+    <div class="container">
+        <div class="columns">
+            <div class="column  is-3">
+                <aside class="menu">
+                    <p class="menu-label">
+                        Migration process
+                    </p>
+                    <ul class="menu-list">
+                        <li><a>Before you start</a></li>
+                        <li><a>Setup repositories</a></li>
+                        <li><a>Save daemons</a></li>
+                        <li><a>Package database</a></li>
+                        <li><a>Remove systemd family</a></li>
+                        <li><a>Additional packages</a></li>
+                    </ul>
+                    <p class="menu-label">
+                        Troubleshooting
+                    </p>
+
+                    <ul class="menu-list">
+                        <li><a href="#revert">Reverting</a></li>
+                    </ul>
+                </aside>
+            </div>
+
+            <div class="column  is-9">
+                <article class="content">
+
+                    <h1>{{ page.title }}</h1>
+
+                    <div class="entry">
+                        {{ content }}
+                    </div>
+                </article>
+            </div>
+        </div>
+    </div>
+</div>

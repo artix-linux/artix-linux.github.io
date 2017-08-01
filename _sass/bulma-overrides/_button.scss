@@ -1,0 +1,11 @@
+// Bulma Element - Button
+
+.button.is-primary {
+    background-color: $color-pale-blue;
+    color: $black;
+
+    &:hover {
+        background-color: darken($color-pale-blue, 10%);
+        color: darken($black, 10%);
+    }
+}

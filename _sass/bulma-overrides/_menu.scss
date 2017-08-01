@@ -1,0 +1,12 @@
+// Bulma Component - Menu
+
+.menu a {
+    color: $color-pale-blue;
+}
+
+
+
+.menu-list a:hover {
+    color: $color-violet;
+    background-color: $color-background;
+}
