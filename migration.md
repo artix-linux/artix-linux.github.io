@@ -81,6 +81,7 @@ Server = https://nchc.dl.sourceforge.net/project/artix-linux/repos/$repo/os/$arc
 Server = https://vorboss.dl.sourceforge.net/project/artix-linux/repos/$repo/os/$arch
 EOF
 ```
+
 Clean all cache and force sync:
 ```
 # pacman -Scc && pacman -Syy
