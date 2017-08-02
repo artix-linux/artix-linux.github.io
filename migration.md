@@ -9,10 +9,8 @@ sub_page: true
 # A word of caution
 {: .has-text-danger } 
 
-Do *not* just copy/paste these lines; read carefully and understand what you are about to do. While you won't get an unbootable system if you just copy/paste these, you might end up with reduced or weird functionality, especially in your desktop environment. 
+Existing OpenRC systems (whether arch-openrc or manjaro-openrc) can be converted to the new scheme with minimal effort. Older eudev-openrc ones might need some more tweaking, especially with concern to the desktop: consolekit2 is replaced by elogind. In any case, the procedure outlined below is meant for OpenRC systems only. Those with vanilla Arch or Manjaro must first <a href="http://systemd-free.org/migrate.php">migrate as described on systemd-free.org</a>.
 
-Some decisions are required from your part, according to your setup. Do read the configuration section afterwards. 
-If you would rather prefer the previous tabled, side-by-side version of this page, you can still access it here (might be seriously out-of-date). 
 
 
 # 1. Setup Repositories
