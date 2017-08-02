@@ -46,11 +46,13 @@ The [multilib] repo will eventually be available too.
 <u><i>The [arch-openrc] and [arch-nosystemd] repos (or [openrc-eudev] if you're still on it) must be disabled.</i></u>
 
 2. Rename /etc/pacman.d/mirrorlist to /etc/pacman.d/mirrorlist-arch
-<code># mv /etc/pacman.d/mirrorlist /etc/pacman.d/mirrorlist-arch
+<code>
+# mv /etc/pacman.d/mirrorlist /etc/pacman.d/mirrorlist-arch
 </code>
 
 3. Create a new /etc/pacman.d/mirrorlist, refresh the database and install the new keyring. The new keyring can be installed either by lowering the security levels in pacman.conf or by ignoring pacman, see below.
-<code># echo &gt /etc/pacman.d/mirrorlist &lt&ltEOF
+<code>
+# echo &gt /etc/pacman.d/mirrorlist &lt&ltEOF
 # Worldwide mirrors
 Server = https://netcologne.dl.sourceforge.net/project/artix-linux/repos/$repo/os/$arch
 Server = https://artix.mief.nl/repos/$repo/os/$arch
@@ -81,7 +83,8 @@ Server = https://vorboss.dl.sourceforge.net/project/artix-linux/repos/$repo/os/$
 EOF
 </code>
 Clean all cache and force sync:
-<code># pacman -Scc && pacman -Syy
+<code>
+# pacman -Scc && pacman -Syy
 </code>
 To allow installation of our keyring, change pacman.conf directives:
 <code>SigLevel          = Never #Required DatabaseOptional
