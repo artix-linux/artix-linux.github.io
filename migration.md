@@ -14,7 +14,11 @@ Existing OpenRC systems (whether arch-openrc or manjaro-openrc) can be converted
 # Summary
 {: .has-text-danger }
 
-In brief, the new repos must be placed before the official Arch or Manjaro ones. Then, sysvinit (provided now by openrc itself) and systemd-sysusers must be removed, as well as consolekit which is replaced by elogind. Next, the base and base devel group must be installed from the new repos. All -nosystemd and consolekit packages have to be replaced by their equivalent too. Finally udev, dbus and elogind services must be enabled and mkinitcpio has to be run for your kernel.
+In brief, the new repos must be placed before the official Arch or Manjaro ones. Then, sysvinit (provided now by openrc itself) and systemd-sysusers must be removed, as well as consolekit which is replaced by elogind. Next, the base and base devel group must be installed from the new repos and a full-system upgrade must be run. All -nosystemd and consolekit packages have to be replaced by their equivalent too. Finally udev, dbus and elogind services must be enabled and mkinitcpio has to be run for your kernel.
+
+The procedure is roughly the following, it widely depends on individual setups and it's still in beta. <font color="#F99">PROCEED WITH CAUTION!</font> You must be fairly confortable with Linux and keep an extra kernel in /boot and a bootable medium nearby. <a href="https://sourceforge.net/projects/artix-linux/files/iso/lxqt/">Fresh install ISOs</a> <strike>will be available soon</strike> are already available!
+<br><br>
+<center><font color="#6F6">The guide is work-in-progress, updated with each report we receive. If something needs correction for your setup, report it!</font></center>
 
 # 1. Setup Repositories
 
