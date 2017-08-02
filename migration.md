@@ -1,13 +1,10 @@
 ---
 layout: migration
-title: Migrate
+title: Migration to Artix
 permalink: /migrate/
 sub_page: true
 ---
 
-
-## A word of caution
-{: .has-text-danger }
 
 Existing OpenRC systems (whether arch-openrc or manjaro-openrc) can be converted to the new scheme with minimal effort. Older eudev-openrc ones might need some more tweaking, especially with concern to the desktop: consolekit2 is replaced by elogind. In any case, the procedure outlined below is meant for OpenRC systems only. Those with vanilla Arch or Manjaro must first <a href="http://systemd-free.org/migrate.php">migrate as described on systemd-free.org</a>.
 
@@ -18,9 +15,10 @@ In brief, the new repos must be placed before the official Arch or Manjaro ones.
 
 The procedure is roughly the following, it widely depends on individual setups and it's still in beta. <font color="#F99">PROCEED WITH CAUTION!</font> You must be fairly confortable with Linux and keep an extra kernel in /boot and a bootable medium nearby. <a href="https://sourceforge.net/projects/artix-linux/files/iso/lxqt/">Fresh install ISOs</a> <strike>will be available soon</strike> are already available!
 <br><br>
-<center><font color="#6F6">The guide is work-in-progress, updated with each report we receive. If something needs correction for your setup, report it!</font></center>
 
-## 1. Setup Repositories
+The guide is work-in-progress, updated with each report we receive. If something needs correction for your setup, report it!
+
+## Let's begin
 
 1. Put these repos in /etc/pacman.conf *before* the official Arch/Manjaro ones and disable [core] of the latter:
 
@@ -46,6 +44,7 @@ The [multilib] repo will eventually be available too.
 _The [arch-openrc] and [arch-nosystemd] repos (or [openrc-eudev] if you're still on it) must be disabled._
 
 2. Rename /etc/pacman.d/mirrorlist to /etc/pacman.d/mirrorlist-arch
+
 ```
 # mv /etc/pacman.d/mirrorlist /etc/pacman.d/mirrorlist-arch
 ```
