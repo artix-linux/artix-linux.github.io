@@ -21,25 +21,27 @@ The procedure is roughly the following, it widely depends on individual setups a
 <center><font color="#6F6">The guide is work-in-progress, updated with each report we receive. If something needs correction for your setup, report it!</font></center>
 
 # 1. Setup Repositories
+Put these repos in /etc/pacman.conf *before* the official Arch/Manjaro ones and disable [core] of the latter:
 
-Append the [arch-openrc] and [arch-nosystemd] repositories to /etc/pacman.conf (all commands below need root privileges).
+<code># Artix repos
+[system]
+Include = /etc/pacman.d/mirrorlist
+[world]
+Include = /etc/pacman.d/mirrorlist
+[galaxy]
+Include = /etc/pacman.d/mirrorlist
 
-```bash
-cat << EOF >> /etc/pacman.conf
-[arch-openrc]
-SigLevel=Never
-Server=http://downloads.sourceforge.net/project/archopenrc/\$repo/\$arch
-Server=ftp://ftp.heanet.ie/mirrors/sourceforge/a/ar/archopenrc/\$repo/\$arch
-Server=http://archbang.org/archopenrc/\$repo/\$arch
+# Arch repos, overriden and [core] disabled
+# [core]
+# Include = /etc/pacman.d/mirrorlist-arch
+[extra]
+Include = /etc/pacman.d/mirrorlist-arch
+[community]
+Include = /etc/pacman.d/mirrorlist-arch
+</code>
 
-[arch-nosystemd]
-SigLevel=Never
-Server=http://downloads.sourceforge.net/project/archopenrc/\$repo/\$arch
-Server=ftp://ftp.heanet.ie/mirrors/sourceforge/a/ar/archopenrc/\$repo/\$arch
-Server=http://archbang.org/archopenrc/\$repo/\$arch
-EOF
-```
-
+The [multilib] repo will eventually be available too.
+<u><i>The [arch-openrc] and [arch-nosystemd] repos (or [openrc-eudev] if you're still on it) must be disabled.</i></u>
 
 # Troubleshooting
 
