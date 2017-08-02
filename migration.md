@@ -11,7 +11,9 @@ sub_page: true
 
 Existing OpenRC systems (whether arch-openrc or manjaro-openrc) can be converted to the new scheme with minimal effort. Older eudev-openrc ones might need some more tweaking, especially with concern to the desktop: consolekit2 is replaced by elogind. In any case, the procedure outlined below is meant for OpenRC systems only. Those with vanilla Arch or Manjaro must first <a href="http://systemd-free.org/migrate.php">migrate as described on systemd-free.org</a>.
 
+# Summary
 
+In brief, the new repos must be placed before the official Arch or Manjaro ones. Then, sysvinit (provided now by openrc itself) and systemd-sysusers must be removed, as well as consolekit which is replaced by elogind. Next, the base and base devel group must be installed from the new repos. All -nosystemd and consolekit packages have to be replaced by their equivalent too. Finally udev, dbus and elogind services must be enabled and mkinitcpio has to be run for your kernel.
 
 # 1. Setup Repositories
 
