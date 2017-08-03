@@ -191,4 +191,5 @@ Graphics drivers. This mostly concerns closed source binary drivers like NVidia'
 
 Reboot. Your normal menu or command line reboot action won't be present or work, just sync and umount your partitions manually, remount / read-only, hit the power button and profit!
 <br><br>
+
 Use some common sense when executing these instructions. I repeat, the project is still beta, do expect minor problems. Then, report glitches, errors, success stories to the <a href="http://systemd-free.org/comments.php">systemd-free.org's comments section</a>.
