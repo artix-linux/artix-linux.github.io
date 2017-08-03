@@ -20,7 +20,7 @@ The guide is work-in-progress, updated with each report we receive. If something
 
 ## Let's begin
 
-1. Put these repos in /etc/pacman.conf *before* the official Arch/Manjaro ones and disable [core] of the latter:
+Put these repos in /etc/pacman.conf *before* the official Arch/Manjaro ones and disable [core] of the latter:
 
 ```
 # Artix repos
@@ -40,16 +40,18 @@ Include = /etc/pacman.d/mirrorlist-arch
 Include = /etc/pacman.d/mirrorlist-arch
 ```
 
-The [multilib] repo will eventually be available too.
 _The [arch-openrc] and [arch-nosystemd] repos (or [openrc-eudev] if you're still on it) must be disabled._
+<br>
+The [multilib] repo will eventually be available too.
 
-2. Rename /etc/pacman.d/mirrorlist to /etc/pacman.d/mirrorlist-arch
+
+Rename /etc/pacman.d/mirrorlist to /etc/pacman.d/mirrorlist-arch
 
 ```
 # mv /etc/pacman.d/mirrorlist /etc/pacman.d/mirrorlist-arch
 ```
 
-3. Create a new /etc/pacman.d/mirrorlist, refresh the database and install the new keyring. The new keyring can be installed either by lowering the security levels in pacman.conf or by ignoring pacman, see below.
+Create a new /etc/pacman.d/mirrorlist, refresh the database and install the new keyring. The new keyring can be installed either by lowering the security levels in pacman.conf or by ignoring pacman, see below.
 ```
 # echo > /etc/pacman.d/mirrorlist <<EOF
 # Worldwide mirrors
@@ -112,7 +114,7 @@ People coming from Manjaro OpenRC, will additionally need to run:
 # mv /etc/conf.d/rpcbind /etc/conf.d/rpcbindmanj
 ```
 
-4. First off, some packages must be removed manually (sysvinit is provided by openrc and consolekit is replaced by elogind).
+First off, some packages must be removed manually (sysvinit is provided by openrc and consolekit is replaced by elogind).
 ```
 # pacman -Rdd sysvinit udev-openrc consolekit consolekit-openrc
 ```
@@ -121,7 +123,7 @@ Install the dummy systemd packages
 # pacman -S --asdeps systemd-dummy libsystemd-dummy
 ```
 
-5. All your packages from base and base-devel groups must be replaced from the ones in [system]. Artix uses linux-lts as its default kernel, so it must be installed too, along with openrc-system.
+All your packages from base and base-devel groups must be replaced from the ones in [system]. Artix uses linux-lts as its default kernel, so it must be installed too, along with openrc-system.
 ```
 # pacman -Su base base-devel openrc-system grub linux-lts linux-lts-headers
 ```
@@ -138,21 +140,21 @@ And compare them against it
 # pacman -S `comm -2 installed groups`
 ```
 
-6. All -nosystemd packages must be replaced with their equivalent from the new repos. If pacman refuses to uninstall one due to dependencies remove it with -Rdd and then install its equivalent. Do the same for -elogind, -consolekit and -upower packages.
+All -nosystemd packages must be replaced with their equivalent from the new repos. If pacman refuses to uninstall one due to dependencies remove it with -Rdd and then install its equivalent. Do the same for -elogind, -consolekit and -upower packages.
 ```
 # for p in `pacman -Qq|grep nosystemd`; do pacman -S `sed s/-nosystemd// <<<$p`; done
 # for p in `pacman -Qq|grep elogind`; do pacman -S `sed s/-elogind// <<<$p`; done
 ...
 ```
 
-7. Remove more systemd cruft and then run a full system upgrade:
+Remove more systemd cruft and then run a full system upgrade:
 ```
 # pacman -Rsdd systemd-sysusers
 # pacman -Su
 # pacman -S --needed opensysusers
 ```
 
-8. Make sure udev, dbus and elogind services are enabled
+Make sure udev, dbus and elogind services are enabled
 <br>
 (they should already be, but it won't hurt to re-add them)
 ```
@@ -162,7 +164,7 @@ And compare them against it
 # rc-update add dbus default
 ```
 
-9. Check if your mkinitcpio.conf has been renamed to .pacsave and recreate your kernel's initramfs with mkinitcpio. I also had to re-install grub in one laptop because it couldn't boot and dropped into a shell. Also check if your grub.cfg is still in place or pacsaved.
+Check if your mkinitcpio.conf has been renamed to .pacsave and recreate your kernel's initramfs with mkinitcpio. I also had to re-install grub in one laptop because it couldn't boot and dropped into a shell. Also check if your grub.cfg is still in place or pacsaved.
 ```
 # mkinitcpio -p linux (or whatever kernel you're using)
 # update-grub
@@ -171,22 +173,22 @@ And compare them against it
 # grub-install --target=x86_64-efi --efi-directory=esp_mount --bootloader-id=grub (ditto, a user reported success with this one)
 ```
 
-10. Go to /etc/conf.d and merge those .pacnew, .pacorig or whatever config files. I use extra/meld for very quick, visual representation and merging of the differences. Check whether your /etc/{passwd,shadow,groups} have been renamed to .pacsaves!
+Go to /etc/conf.d and merge those .pacnew, .pacorig or whatever config files. I use extra/meld for very quick, visual representation and merging of the differences. Check whether your /etc/{passwd,shadow,groups} have been renamed to .pacsaves!
 <br>
 
-11. Check if /sbin/init exists! If not, you missed something or hit a bug. Simply re-install openrc:
+Check if /sbin/init exists! If not, you missed something or hit a bug. Simply re-install openrc:
 ```
 # pacman -S openrc
 ```
 
-12. Find packages not in repos (i.e. from the AUR). Some might need updating/rebuilding or removal, if they're show-stoppers (unlikely):
+Find packages not in repos (i.e. from the AUR). Some might need updating/rebuilding or removal, if they're show-stoppers (unlikely):
 ```
 # pacman -Qm
 ```
 
-13. Graphics. This mostly concerns closed source binary drivers like NVidia's. You can either use nvidia-lts with our linux-lts or the nvidia-dkms package which builds the module for all installed kernels.
+Graphics drivers. This mostly concerns closed source binary drivers like NVidia's. You can either use nvidia-lts with our linux-lts or the nvidia-dkms package which builds the module for all installed kernels.
 <br>
 
-14. Reboot. Your normal menu or command line reboot action won't be present or work, just sync and umount your partitions manually, remount / read-only, hit the power button and profit!
+Reboot. Your normal menu or command line reboot action won't be present or work, just sync and umount your partitions manually, remount / read-only, hit the power button and profit!
 <br><br>
 Use some common sense when executing these instructions. I repeat, the project is still beta, do expect minor problems. Then, report glitches, errors, success stories to the <a href="http://systemd-free.org/comments.php">systemd-free.org's comments section</a>.
