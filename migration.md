@@ -18,7 +18,10 @@ The procedure is roughly the following, it widely depends on individual setups a
 
 The guide is work-in-progress, updated with each report we receive. If something needs correction for your setup, report it!
 
-## Let's begin
+Let's begin
+
+# Setup Repositories
+{: #repositories}
 
 Put these repos in /etc/pacman.conf *before* the official Arch/Manjaro ones and disable [core] of the latter:
 
@@ -40,15 +43,20 @@ Include = /etc/pacman.d/mirrorlist-arch
 Include = /etc/pacman.d/mirrorlist-arch
 ```
 
-_The [arch-openrc] and [arch-nosystemd] repos (or [openrc-eudev] if you're still on it) must be disabled._
-<br>
-The [multilib] repo will eventually be available too.
 
+>_The [arch-openrc] and [arch-nosystemd] repos (or [openrc-eudev] if you're still on it) must be disabled._
+{: .is-danger}
+
+> The [multilib] repo will eventually be available too.
+{: .is-info}
+
+# Setup mirrors
+{: #mirrors}
 
 Rename /etc/pacman.d/mirrorlist to /etc/pacman.d/mirrorlist-arch
 
-```
-# mv /etc/pacman.d/mirrorlist /etc/pacman.d/mirrorlist-arch
+```bash
+mv /etc/pacman.d/mirrorlist /etc/pacman.d/mirrorlist-arch
 ```
 
 Create a new /etc/pacman.d/mirrorlist, refresh the database and install the new keyring. The new keyring can be installed either by lowering the security levels in pacman.conf or by ignoring pacman, see below.
@@ -86,58 +94,78 @@ EOF
 
 Clean all cache and force sync:
 ```
-# pacman -Scc && pacman -Syy
+pacman -Scc && pacman -Syy
 ```
+
+# Install keyring
+
 To allow installation of our keyring, change pacman.conf directives:
 ```
 SigLevel          = Never #Required DatabaseOptional
 LocalFileSigLevel = Never #Optional
 ```
-Run:
-```
-# pacman -S artix-keyring
-# pacman-key --populate cromnix
+
+Now run:
+
+```bash
+pacman -S artix-keyring
+pacman-key --populate cromnix
 ```
 And restore pacman.conf security. Alternatively, don't touch pacman.conf, but ignore pacman's warnings and leave artix-keyring in the package cache:
 ```
-# pacman -Sw artix-keyring
+pacman -Sw artix-keyring
 ```
 Say "y" to signature imports and "n" to deleting corrupted packages.
 ```
-# pacman -U /var/cache/pacman/pkg/artix-keyring-[PRESS TAB]
-# pacman-key --populate cromnix
-```
-People coming from Manjaro OpenRC, will additionally need to run:
-```
-# pacman -Rdd manjaro-system
-# pacman -Rsc manjaro-tools-base manjaro-system mhwd mhwd-db manjaro-firmware manjaro-settings-manager intel-ucode lsb-release rpcbind-openrc
-# mv /etc/conf.d/rpcbind /etc/conf.d/rpcbindmanj
+pacman -U /var/cache/pacman/pkg/artix-keyring-[PRESS TAB]
+pacman-key --populate cromnix
 ```
 
-First off, some packages must be removed manually (sysvinit is provided by openrc and consolekit is replaced by elogind).
+# Migrating from Manjaro
+{: #migrating-from-manjaro}
+
+People coming from Manjaro OpenRC, will additionally need to run:
+
+```bash
+pacman -Rdd manjaro-system
+pacman -Rsc manjaro-tools-base \
+            manjaro-system \ 
+            mhwd \ 
+            mhwd-db \
+            manjaro-firmware \
+            manjaro-settings-manager \
+            intel-ucode \
+            lsb-release \
+            rpcbind-openrc
+mv /etc/conf.d/rpcbind /etc/conf.d/rpcbindmanj
 ```
-# pacman -Rdd sysvinit udev-openrc consolekit consolekit-openrc
+
+# Setup base
+{: #setup-base}
+First off, some packages must be removed manually (sysvinit is provided by openrc and consolekit is replaced by elogind).
+```bash
+pacman -Rdd sysvinit udev-openrc consolekit consolekit-openrc
 ```
 Install the dummy systemd packages
 ```
-# pacman -S --asdeps systemd-dummy libsystemd-dummy
+pacman -S --asdeps systemd-dummy libsystemd-dummy
 ```
 
 All your packages from base and base-devel groups must be replaced from the ones in [system]. Artix uses linux-lts as its default kernel, so it must be installed too, along with openrc-system.
 ```
-# pacman -Su base base-devel openrc-system grub linux-lts linux-lts-headers
+pacman -Su base base-devel openrc-system grub linux-lts linux-lts-headers
 ```
 Otherwise you must find only the installed ones and replace them.
 ```
-# pacman -Qg base base-devel | awk '{print $2}' | sort | uniq > installed
+pacman -Qg base base-devel | awk '{print $2}' | sort | uniq > installed
 ```
 Assemble the entire list
 ```
-# pacman -Sg base base-devel | awk '{print $2}' | sort | uniq >| groups
+pacman -Sg base base-devel | awk '{print $2}' | sort | uniq >| groups
 ```
 And compare them against it
 ```
-# pacman -S `comm -2 installed groups`
+pacman -S `comm -2 installed groups`
 ```
 
 All -nosystemd packages must be replaced with their equivalent from the new repos. If pacman refuses to uninstall one due to dependencies remove it with -Rdd and then install its equivalent. Do the same for -elogind, -consolekit and -upower packages.
@@ -148,48 +176,69 @@ All -nosystemd packages must be replaced with their equivalent from the new repo
 ```
 
 Remove more systemd cruft and then run a full system upgrade:
-```
-# pacman -Rsdd systemd-sysusers
-# pacman -Su
-# pacman -S --needed opensysusers
+
+```bash
+pacman -Rsdd systemd-sysusers
+pacman -Su
+pacman -S --needed opensysusers
 ```
 
 Make sure udev, dbus and elogind services are enabled
 <br>
 (they should already be, but it won't hurt to re-add them)
-```
-# rc-update add udev boot
-# rc-update del elogind default
-# rc-update add elogind boot
-# rc-update add dbus default
+
+```bash
+rc-update add udev boot
+rc-update del elogind default
+rc-update add elogind boot
+rc-update add dbus default
 ```
 
+# Reinstall GRUB
+{: #reinstall-grub}
+
 Check if your mkinitcpio.conf has been renamed to .pacsave and recreate your kernel's initramfs with mkinitcpio. I also had to re-install grub in one laptop because it couldn't boot and dropped into a shell. Also check if your grub.cfg is still in place or pacsaved.
+
 ```
-# mkinitcpio -p linux (or whatever kernel you're using)
-# update-grub
+mkinitcpio -p linux (or whatever kernel you're using)
+update-grub
 # grub-install /dev/sda (your boot disk or partition, for BIOS systems)
 # grub-install --target=x86_64-efi --efi-directory=/boot/efi --bootloader-id=grub (for UEFI systems)
 # grub-install --target=x86_64-efi --efi-directory=esp_mount --bootloader-id=grub (ditto, a user reported success with this one)
 ```
 
+# Check configuration files
+{: #check-config-files}
+
 Go to /etc/conf.d and merge those .pacnew, .pacorig or whatever config files. I use extra/meld for very quick, visual representation and merging of the differences. Check whether your /etc/{passwd,shadow,groups} have been renamed to .pacsaves!
 <br>
 
+# Verify /sbin/init
+{: #verifiy-sbin-init}
+
 Check if /sbin/init exists! If not, you missed something or hit a bug. Simply re-install openrc:
 ```
-# pacman -S openrc
+pacman -S openrc
 ```
+
+# AUR Packages
+{: #aur-packages}
 
 Find packages not in repos (i.e. from the AUR). Some might need updating/rebuilding or removal, if they're show-stoppers (unlikely):
 ```
-# pacman -Qm
+pacman -Qm
 ```
 
-Graphics drivers. This mostly concerns closed source binary drivers like NVidia's. You can either use nvidia-lts with our linux-lts or the nvidia-dkms package which builds the module for all installed kernels.
+# Graphics drivers
+{: #graphics-drivers}
+This mostly concerns closed source binary drivers like NVidia's. You can either use nvidia-lts with our linux-lts or the nvidia-dkms package which builds the module for all installed kernels.
 <br>
 
-Reboot. Your normal menu or command line reboot action won't be present or work, just sync and umount your partitions manually, remount / read-only, hit the power button and profit!
+# Reboot 
+{: #reboot}
+
+Your normal menu or command line reboot action won't be present or work, just sync and umount your partitions manually, remount / read-only, hit the power button and profit!
 <br><br>
 
-Use some common sense when executing these instructions. I repeat, the project is still beta, do expect minor problems. Then, report glitches, errors, success stories to the <a href="http://systemd-free.org/comments.php">systemd-free.org's comments section</a>.
+> Use some common sense when executing these instructions. I repeat, the project is still beta, do expect minor problems. Then, report glitches, errors, success stories to the <a href="http://systemd-free.org/comments.php">systemd-free.org's comments section</a>.
+{: .is-danger}
