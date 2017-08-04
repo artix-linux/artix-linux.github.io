@@ -1,5 +1,19 @@
 // Bulma Component - Blockquote
 
+.content {
+    blockquote {
+        padding-bottom: 5px;
+        padding-top: 10px;
+
+        p:last-child {
+            margin-bottom: 0;
+        }
+    }
+}
+
+
+
+
 blockquote.is-info {
     border-color: $color-green;
 }
