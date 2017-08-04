@@ -98,7 +98,7 @@ pacman -Scc && pacman -Syy
 ```
 
 # Install keyring
-
+{: #keyring}
 To allow installation of our keyring, change pacman.conf directives:
 ```
 SigLevel          = Never #Required DatabaseOptional
