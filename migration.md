@@ -61,7 +61,7 @@ mv /etc/pacman.d/mirrorlist /etc/pacman.d/mirrorlist-arch
 
 Create a new /etc/pacman.d/mirrorlist, refresh the database and install the new keyring. The new keyring can be installed either by lowering the security levels in pacman.conf or by ignoring pacman, see below.
 ```
-# echo > /etc/pacman.d/mirrorlist <<EOF
+# cat > /etc/pacman.d/mirrorlist <<\EOF
 # Worldwide mirrors
 Server = https://netcologne.dl.sourceforge.net/project/artix-linux/repos/$repo/os/$arch
 Server = https://artix.mief.nl/repos/$repo/os/$arch
