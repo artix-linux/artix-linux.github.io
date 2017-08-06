@@ -109,7 +109,7 @@ Now run:
 
 ```bash
 pacman -S artix-keyring
-pacman-key --populate cromnix
+pacman-key --populate artix
 ```
 And restore pacman.conf security. Alternatively, don't touch pacman.conf, but ignore pacman's warnings and leave artix-keyring in the package cache:
 ```
@@ -118,7 +118,7 @@ pacman -Sw artix-keyring
 Say "y" to signature imports and "n" to deleting corrupted packages.
 ```
 pacman -U /var/cache/pacman/pkg/artix-keyring-[PRESS TAB]
-pacman-key --populate cromnix
+pacman-key --populate artix
 ```
 
 # Migrating from Manjaro
@@ -129,8 +129,8 @@ People coming from Manjaro OpenRC, will additionally need to run:
 ```bash
 pacman -Rdd manjaro-system
 pacman -Rsc manjaro-tools-base \
-            manjaro-system \ 
-            mhwd \ 
+            manjaro-system \
+            mhwd \
             mhwd-db \
             manjaro-firmware \
             manjaro-settings-manager \
@@ -234,7 +234,7 @@ pacman -Qm
 This mostly concerns closed source binary drivers like NVidia's. You can either use nvidia-lts with our linux-lts or the nvidia-dkms package which builds the module for all installed kernels.
 <br>
 
-# Reboot 
+# Reboot
 {: #reboot}
 
 Your normal menu or command line reboot action won't be present or work, just sync and umount your partitions manually, remount / read-only, hit the power button and profit!
