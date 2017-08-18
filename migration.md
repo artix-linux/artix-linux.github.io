@@ -63,6 +63,7 @@ Create a new /etc/pacman.d/mirrorlist, refresh the database and install the new 
 ```
 # cat > /etc/pacman.d/mirrorlist <<\EOF
 # Worldwide mirrors
+Server = https://mirrors.dotsrc.org/artix-linux/repos/$repo/os/$arch
 Server = https://netcologne.dl.sourceforge.net/project/artix-linux/repos/$repo/os/$arch
 Server = https://artix.mief.nl/repos/$repo/os/$arch
 Server = https://freefr.dl.sourceforge.net/project/artix-linux/repos/$repo/os/$arch
