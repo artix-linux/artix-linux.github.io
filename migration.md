@@ -4,7 +4,17 @@ title: Migration to Artix
 permalink: /migrate/
 sub_page: true
 ---
+
+
+
+
+
 This page is obsolete, use <a href="artixlinux.org/migrate.php">the migration guide of the official site</a> instead.
+
+
+
+
+
 
 Existing OpenRC systems (whether arch-openrc or manjaro-openrc) can be converted to the new scheme with minimal effort. Older eudev-openrc ones might need some more tweaking, especially with concern to the desktop: consolekit2 is replaced by elogind. In any case, the procedure outlined below is meant for OpenRC systems only. Those with vanilla Arch or Manjaro must first <a href="http://systemd-free.org/migrate.php">migrate as described on systemd-free.org</a>.
 
