@@ -9,7 +9,7 @@ sub_page: true
 
 <br><br>
 
-## This page is obsolete, use <a href="artixlinux.org/migrate.php">the migration guide of the official site</a> instead.
+## This page is obsolete, use <a href="https://wiki.artixlinux.org/Main/Migration">the migration guide of the official site</a> instead.
 <br><br><br>
 
 
